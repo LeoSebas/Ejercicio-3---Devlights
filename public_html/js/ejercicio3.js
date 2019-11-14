@@ -12,7 +12,7 @@ function calcCommonChild(){
     s2 = sEnt[1];
     auxs2 = s2;
     for(i=0;i < s1.length; i++) {
-        letra1 = s1.charAt(i);
+        letra = s1.charAt(i);
         var poscLetra = auxs2.indexOf(letra);
         if (poscLetra !== -1){
             result++;
