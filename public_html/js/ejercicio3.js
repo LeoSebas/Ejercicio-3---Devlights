@@ -10,23 +10,26 @@ function calcCommonChild(){
     sEnt = s.split(" ");
     var s1 = clearString(sEnt[0],sEnt[1]);
     var s2 = clearString(sEnt[1],sEnt[0]);
-    for(i=0;i < s1.length; i++) {
-        var auxs2 = s2;
-        for(j=0;j < s1.length; j++) {
-            var letra = s1.charAt(j);
-            var poscLetra = auxs2.indexOf(letra);
-            if (poscLetra !== -1){
-                child = child + letra;
-                auxs2 = auxs2.substring(poscLetra + 1);
-            } else {
-                childs.push(child);
-                child = "";
-                break;
+    var result ="";
+    if ((s1.length!== 0 || s2.length!== 0)){
+        for(i=0;i < s1.length; i++) {
+            var auxs2 = s2;
+            for(j=0;j < s1.length; j++) {
+                var letra = s1.charAt(j);
+                var poscLetra = auxs2.indexOf(letra);
+                if (poscLetra !== -1){
+                    child = child + letra;
+                    auxs2 = auxs2.substring(poscLetra + 1);
+                } else {
+                    break;
+                }
             }
+            childs.push(child);
+            child = "";
+            s1 = s1.substring(i+1);
         }
-        s1 = s1.substring(i);
+        result = getMaxChild(childs);
     }
-    var result = getMaxChild(childs);
     document.querySelector("#result").setAttribute("value",result.length);
     document.querySelector("#child").setAttribute("value",result);
 }
@@ -45,6 +48,7 @@ function clearString(s1, s2){
     var s1Vec = s1.split("");
     var s2Vec = s2.split("");
     var resultVec = [];
+    var result = "";
     for (i=0;i<s1Vec.length;i++){
         var letra = s1Vec[i];
         for (j=0;j<s2Vec.length;j++){
@@ -54,6 +58,8 @@ function clearString(s1, s2){
             }
         }
     }
-    var result = resultVec.join("");
+    if (resultVec.length !== 0){
+        result = resultVec.join("");
+    } 
     return result;
 }
