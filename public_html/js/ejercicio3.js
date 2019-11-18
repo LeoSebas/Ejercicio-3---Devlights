@@ -5,47 +5,55 @@
  */
 function calcCommonChild(){
     s = document.getElementById("stringEntrada").value;
-    result = 0;
-    child = "";
+    var childs =[];
+    var child = "";
     sEnt = s.split(" ");
-    s1 = clearString(sEnt[0],sEnt[1]) ;
-    s2 = clearString(sEnt[1],sEnt[0]);
-    auxs2 = s2;
+    var s1 = clearString(sEnt[0],sEnt[1]);
+    var s2 = clearString(sEnt[1],sEnt[0]);
     for(i=0;i < s1.length; i++) {
-        letra = s1.charAt(i);
-        var poscLetra = auxs2.indexOf(letra);
-        if (poscLetra !== -1){
-            result++;
-            child = child + letra;
-            auxs2 = auxs2.substring(i);
-        } else {
-            
+        var auxs2 = s2;
+        for(j=0;j < s1.length; j++) {
+            var letra = s1.charAt(j);
+            var poscLetra = auxs2.indexOf(letra);
+            if (poscLetra !== -1){
+                child = child + letra;
+                auxs2 = auxs2.substring(poscLetra + 1);
+            } else {
+                childs.push(child);
+                child = "";
+                break;
+            }
+        }
+        s1 = s1.substring(i);
+    }
+    var result = getMaxChild(childs);
+    document.querySelector("#result").setAttribute("value",result.length);
+    document.querySelector("#child").setAttribute("value",result);
+}
+function getMaxChild(v){
+    max =0;
+    result = "";
+    for (i=0; i<v.length;i++){
+        if (max < v[i].length){
+            max = v[i].length;
+            result = v[i];
         }
     }
-    document.querySelector("#result").setAttribute("value",result);
-    alert(child);
+    return result;
 }
-/*function clearString(s){
-    sEnt = s.split(" ");
-    s1 = sEnt[0] ;
-    s2 = sEnt[1];
-    s1Vec = s1.split("");
-    s2Vec = s2.split("");
-    for (i=0;i<s1Vec.length();i++){
-        letra = s1Vec[i];
-    }
-*/
 function clearString(s1, s2){
-    s1Vec = s1.split("");
-    s2Vec = s2.split("");
-    var result = [];
-    for (i=0;i<s1Vec.length();i++){
-        letra = s1Vec[i];
-        for (i=0;i<s2Vec.length();i++){
-            if (letra === s2Vec[i]){
-                result.push(letra);
+    var s1Vec = s1.split("");
+    var s2Vec = s2.split("");
+    var resultVec = [];
+    for (i=0;i<s1Vec.length;i++){
+        var letra = s1Vec[i];
+        for (j=0;j<s2Vec.length;j++){
+            if (letra === s2Vec[j]){
+                resultVec.push(letra);
+                break;
             }
         }
     }
+    var result = resultVec.join("");
     return result;
 }
