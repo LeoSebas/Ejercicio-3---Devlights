@@ -4,13 +4,18 @@
  * and open the template in the editor.
  */
 function calcCommonChild(){
-    s = document.getElementById("stringEntrada").value;
+    //Defino e inicializo variables
     var childs =[];
     var child = "";
+    var result ="";
+    //obtengo el string ingresado
+    s = document.getElementById("stringEntrada").value;
+    //lo separo en un array
     sEnt = s.split(" ");
+    //Defino y asigno el valor de las string ya parseadas
     var s1 = clearString(sEnt[0],sEnt[1]);
     var s2 = clearString(sEnt[1],sEnt[0]);
-    var result ="";
+    
     if ((s1.length!== 0 || s2.length!== 0)){
         for(i=0;i < s1.length; i++) {
             var auxs2 = s2;
@@ -44,6 +49,7 @@ function getMaxChild(v){
     }
     return result;
 }
+//Esta funcion se encarga de quitar las letras que no tienen en común las 2
 function clearString(s1, s2){
     var s1Vec = s1.split("");
     var s2Vec = s2.split("");
